@@ -24,9 +24,9 @@ export class ClassData{
 }
 
 export interface addformInt{
-    title:string,
-    teacher:string,
-    hour:string,
-    image:string,
-    introduce:string
+    title?:string,
+    teacher?:string,
+    hour?:string,
+    image?:string,
+    introduce?:string
 }

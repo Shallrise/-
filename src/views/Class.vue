@@ -34,7 +34,6 @@
           links
           size="large"
           type="danger"
-          @click.prevent="deleteClass(scope.row)"
         >
           <el-icon><i-ep-Delete /></el-icon>
         </el-button>
@@ -166,7 +165,7 @@ const openEditDialog = () =>{
     editDialogVisible.value=true
 }
 
-const editRow = (editData) =>{
+const editRow = (editData:addformInt) =>{
     openEditDialog()
     editForm.value=editData.row
     
@@ -191,9 +190,7 @@ const editClassConfirm = () =>{
     });
 }
 
-const deleteClass=(deleteData) =>{
 
-}
 
 onMounted(() => {
   getClassList();
