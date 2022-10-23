@@ -97,7 +97,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
-import { getList, addClass,editClass } from "../api/class.ts";
+import { getList, addClass,editClass } from "../api/class";
 import { ClassData, addformInt } from "../type/classType";
 import { ElMessage } from "element-plus";
 // import {addClass} from "../api/class"
