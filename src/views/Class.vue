@@ -98,10 +98,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
 import { getList, addClass, editClass, deleteClass } from "../api/class";
-import { ClassData, addformData, eddformData } from "../type/classType";
+import { ClassData, addformData, eddformData,eddformInt } from "../type/classType";
 import { ElMessage } from "element-plus";
-// import {addClass} from "../api/class"
-// import addDialog from '../components/addDialog.vue'
 
 const classDataList = reactive(new ClassData());
 const addFormList = reactive(new addformData());
@@ -109,22 +107,18 @@ const editFormList = reactive(new eddformData());
 
 const state = reactive<{
   addDialogVisible: boolean;
-  editForm: eddformInt;
   editDialogVisible: boolean;
 }>({
   addDialogVisible: false,
-  editForm: [],
   editDialogVisible: false,
 });
 
-const { addDialogVisible, editForm, editDialogVisible } =
+const { addDialogVisible, editDialogVisible } =
   toRefs(state);
 
-// const visible = ref(false)
 
 const getClassList = () => {
   getList().then((res: any) => {
-    // console.log(res.data);
     classDataList.records = res.data.data.records;
   });
 };
@@ -139,8 +133,7 @@ const closeAddDialog = () => {
 
 const handleConfirm = () => {
   addClass(addFormList.addForm)
-    .then((res) => {
-      // console.log(res);
+    .then((res:any) => {
       if (res.data.code === 200) {
         ElMessage({
           message: "添加成功",
@@ -169,15 +162,10 @@ const openEditDialog = () => {
 
 const editRow = (editData: eddformInt) => {
   openEditDialog();
-  // console.log(editData.id);
-  // editFormList.editForm.value.id=editData.id
-  console.log(editData);
-
   editFormList.editForm = editData;
 };
 
 const editClassConfirm = () => {
-  // console.log(editForm.value);
   editClass(editFormList.editForm)
     .then((res: any) => {
       if (res.data.code === 200) {
@@ -199,8 +187,6 @@ const editClassConfirm = () => {
 };
 
 const confirmDelClass = (id: number) => {
-  // console.log(id);
-
   deleteClass(id)
     .then((res: any) => {
       if (res.data.code === 200) {
