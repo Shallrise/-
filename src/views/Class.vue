@@ -97,7 +97,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
-import { getList, addClass, editClass, deleteClass } from "../api/class.ts";
+import { getList, addClass, editClass, deleteClass } from "../api/class";
 import { ClassData, addformInt, eddformInt } from "../type/classType";
 import { ElMessage } from "element-plus";
 // import {addClass} from "../api/class"
@@ -123,7 +123,7 @@ const { addForm, addDialogVisible, editForm, editDialogVisible } =
 // const visible = ref(false)
 
 const getClassList = () => {
-  getList().then((res) => {
+  getList().then((res:any) => {
     // console.log(res.data);
     classDataList.records = res.data.data.records;
   });
@@ -179,7 +179,7 @@ const editRow = (editData: eddformInt) => {
 const editClassConfirm = () => {
   console.log(editForm.value);
   editClass(editForm.value)
-    .then((res) => {
+    .then((res:any) => {
       if (res.data.code === 200) {
         ElMessage({
           message: "编辑成功",
@@ -198,14 +198,14 @@ const editClassConfirm = () => {
     });
 };
 
-const confirmDelClass = (id) => {
-  console.log(id);
+const confirmDelClass = (id:number) => {
+  // console.log(id);
 
   deleteClass(id)
-    .then((res) => {
+    .then((res:any) => {
       if (res.data.code === 200) {
         ElMessage({
-          message: "编辑成功",
+          message: "删除成功",
           type: "success",
         });
       }
