@@ -16,7 +16,7 @@ interface operaForm{
 interface editClassForm{
     title:string,
     teacher:string,
-    hour:string,
+    hour:number,
     image:string,
     introduce:string,
     id:number
