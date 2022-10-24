@@ -1,7 +1,8 @@
+import axios from "axios";
 import createAxios from "../utils/requst";
 
 const api = {
-    operaclass:'/course'
+    operaclass:'/admin/course'
 }
 
 interface operaForm{
@@ -9,7 +10,8 @@ interface operaForm{
     teacher:string,
     hour:string,
     image:string,
-    introduce:string
+    introduce:string,
+    id?:number
 }
 
 export function getList(){
@@ -42,7 +44,18 @@ export function editClass(editform:operaForm){
             teacher:editform.teacher,
             hour:editform.hour,
             image:editform.image,
-            introduce:editform.introduce
+            introduce:editform.introduce,
+            id:editform.id
+        }
+    })
+}
+
+export function deleteClass(id:number){
+    return createAxios({
+        url:api.operaclass,
+        method:'delete',
+        params:{
+            courseId:id
         }
     })
 }

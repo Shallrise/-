@@ -27,13 +27,14 @@
         <el-button links size="large">
           <el-icon><i-ep-FolderOpened /></el-icon>
         </el-button>
-        <el-button links size="large" @click.prevent="editRow(scope)">
+        <el-button links size="large" @click.prevent="editRow(scope.row)">
           <el-icon><i-ep-EditPen /></el-icon>
         </el-button>
         <el-button
           links
           size="large"
           type="danger"
+          @click.prevent="confirmDelClass(scope.row.id)"
         >
           <el-icon><i-ep-Delete /></el-icon>
         </el-button>
@@ -96,8 +97,8 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
-import { getList, addClass,editClass } from "../api/class";
-import { ClassData, addformInt } from "../type/classType";
+import { getList, addClass, editClass, deleteClass } from "../api/class.ts";
+import { ClassData, addformInt, eddformInt } from "../type/classType";
 import { ElMessage } from "element-plus";
 // import {addClass} from "../api/class"
 // import addDialog from '../components/addDialog.vue'
@@ -107,22 +108,23 @@ const classDataList = reactive(new ClassData());
 const state = reactive<{
   addForm: addformInt;
   addDialogVisible: boolean;
-  editForm:addformInt;
-  editDialogVisible:boolean
+  editForm: eddformInt;
+  editDialogVisible: boolean;
 }>({
   addForm: [],
   addDialogVisible: false,
-  editForm:[],
-  editDialogVisible:false
+  editForm: [],
+  editDialogVisible: false,
 });
 
-const { addForm, addDialogVisible,editForm,editDialogVisible } = toRefs(state);
+const { addForm, addDialogVisible, editForm, editDialogVisible } =
+  toRefs(state);
 
 // const visible = ref(false)
 
 const getClassList = () => {
   getList().then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     classDataList.records = res.data.data.records;
   });
 };
@@ -138,7 +140,7 @@ const closeAddDialog = () => {
 const handleConfirm = () => {
   addClass(addForm.value)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.code === 200) {
         ElMessage({
           message: "添加成功",
@@ -146,7 +148,7 @@ const handleConfirm = () => {
         });
       }
       closeAddDialog();
-       getClassList()
+      getClassList();
     })
     .catch(() => {
       ElMessage({
@@ -157,44 +159,73 @@ const handleConfirm = () => {
     });
 };
 
-const closeEditDialog = () =>{
-    editDialogVisible.value=false
-}
+const closeEditDialog = () => {
+  editDialogVisible.value = false;
+};
 
-const openEditDialog = () =>{
-    editDialogVisible.value=true
-}
+const openEditDialog = () => {
+  editDialogVisible.value = true;
+};
 
-const editRow = (editData:addformInt) =>{
-    openEditDialog()
-    editForm.value=editData.row
-    
-}
+const editRow = (editData: eddformInt) => {
+  openEditDialog();
+  // console.log(editData.id);
+  // editForm.value.id=editData.id
+  console.log(editData);
 
-const editClassConfirm = () =>{
-    editClass(editForm.value).then((res)=>{
-        if(res.data.code === 200){
-            ElMessage({
+  editForm.value = editData;
+};
+
+const editClassConfirm = () => {
+  console.log(editForm.value);
+  editClass(editForm.value)
+    .then((res) => {
+      if (res.data.code === 200) {
+        ElMessage({
           message: "编辑成功",
           type: "success",
         });
-        }
-        getClassList()
-        closeEditDialog()
-    }).catch(() => {
+      }
+      getClassList();
+      closeEditDialog();
+    })
+    .catch(() => {
       ElMessage({
         message: "编辑失败",
         type: "error",
       });
       closeAddDialog();
     });
-}
+};
 
+const confirmDelClass = (id) => {
+  console.log(id);
 
+  deleteClass(id)
+    .then((res) => {
+      if (res.data.code === 200) {
+        ElMessage({
+          message: "编辑成功",
+          type: "success",
+        });
+      }
+      getClassList();
+    })
+    .catch(() => {
+      ElMessage({
+        message: "删除失败",
+        type: "error",
+      });
+    });
+};
 
 onMounted(() => {
   getClassList();
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+</style>
