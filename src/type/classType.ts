@@ -51,5 +51,12 @@ export interface eddformInt {
 }
 
 export class eddformData {
-  editForm: eddformInt[] = [];
+  editForm: eddformInt={
+    id: 0,
+    image: '',
+    introduce: "",
+    teacher: "",
+    hour: 0,
+    title: ""
+  };
 }
