@@ -11,7 +11,15 @@ interface operaForm{
     hour:string,
     image:string,
     introduce:string,
-    id?:number
+}
+
+interface editClassForm{
+    title:string,
+    teacher:string,
+    hour:string,
+    image:string,
+    introduce:string,
+    id:number
 }
 
 export function getList(){
@@ -35,7 +43,7 @@ export function addClass(addform:operaForm){
     })
 }
 
-export function editClass(editform:operaForm){
+export function editClass(editform:editClassForm){
     return createAxios({
         url:api.operaclass,
         method:'put',

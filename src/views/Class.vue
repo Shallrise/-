@@ -43,21 +43,21 @@
   </el-table>
   <!-- 添加课程对话框 -->
   <el-dialog v-model="addDialogVisible">
-    <el-form :model="addForm">
+    <el-form :model="addFormList.addForm">
       <el-form-item label="课程名称">
-        <el-input v-model="addForm.title" />
+        <el-input v-model="addFormList.addForm.title" />
       </el-form-item>
       <el-form-item label="授课老师">
-        <el-input v-model="addForm.teacher" />
+        <el-input v-model="addFormList.addForm.teacher" />
       </el-form-item>
       <el-form-item label="课时">
-        <el-input v-model="addForm.hour" />
+        <el-input v-model="addFormList.addForm.hour" />
       </el-form-item>
       <el-form-item label="封面">
-        <el-input v-model="addForm.image" />
+        <el-input v-model="addFormList.addForm.image" />
       </el-form-item>
       <el-form-item label="课程介绍">
-        <el-input v-model="addForm.introduce" />
+        <el-input v-model="addFormList.addForm.introduce" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -69,21 +69,21 @@
   </el-dialog>
   <!-- 编辑课程对话框 -->
   <el-dialog v-model="editDialogVisible">
-    <el-form :model="editForm">
+    <el-form :model="editFormList.editForm">
       <el-form-item label="课程名称" prop="title">
-        <el-input v-model="editForm.title" />
+        <el-input v-model="editFormList.editForm.title" />
       </el-form-item>
       <el-form-item label="授课老师">
-        <el-input v-model="editForm.teacher" />
+        <el-input v-model="editFormList.editForm.teacher" />
       </el-form-item>
       <el-form-item label="课时">
-        <el-input v-model="editForm.hour" />
+        <el-input v-model="editFormList.editForm.hour" />
       </el-form-item>
       <el-form-item label="封面">
-        <el-input v-model="editForm.image" />
+        <el-input v-model="editFormList.editForm.image" />
       </el-form-item>
       <el-form-item label="课程介绍">
-        <el-input v-model="editForm.introduce" />
+        <el-input v-model="editFormList.editForm.introduce" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -98,32 +98,32 @@
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
 import { getList, addClass, editClass, deleteClass } from "../api/class";
-import { ClassData, addformInt, eddformInt } from "../type/classType";
+import { ClassData, addformData, eddformData } from "../type/classType";
 import { ElMessage } from "element-plus";
 // import {addClass} from "../api/class"
 // import addDialog from '../components/addDialog.vue'
 
 const classDataList = reactive(new ClassData());
+const addFormList = reactive(new addformData());
+const editFormList = reactive(new eddformData());
 
 const state = reactive<{
-  addForm: addformInt;
   addDialogVisible: boolean;
   editForm: eddformInt;
   editDialogVisible: boolean;
 }>({
-  addForm: [],
   addDialogVisible: false,
   editForm: [],
   editDialogVisible: false,
 });
 
-const { addForm, addDialogVisible, editForm, editDialogVisible } =
+const { addDialogVisible, editForm, editDialogVisible } =
   toRefs(state);
 
 // const visible = ref(false)
 
 const getClassList = () => {
-  getList().then((res:any) => {
+  getList().then((res: any) => {
     // console.log(res.data);
     classDataList.records = res.data.data.records;
   });
@@ -138,7 +138,7 @@ const closeAddDialog = () => {
 };
 
 const handleConfirm = () => {
-  addClass(addForm.value)
+  addClass(addFormList.addForm)
     .then((res) => {
       // console.log(res);
       if (res.data.code === 200) {
@@ -170,16 +170,16 @@ const openEditDialog = () => {
 const editRow = (editData: eddformInt) => {
   openEditDialog();
   // console.log(editData.id);
-  // editForm.value.id=editData.id
+  // editFormList.editForm.value.id=editData.id
   console.log(editData);
 
-  editForm.value = editData;
+  editFormList.editForm = editData;
 };
 
 const editClassConfirm = () => {
-  console.log(editForm.value);
-  editClass(editForm.value)
-    .then((res:any) => {
+  // console.log(editForm.value);
+  editClass(editFormList.editForm)
+    .then((res: any) => {
       if (res.data.code === 200) {
         ElMessage({
           message: "编辑成功",
@@ -198,11 +198,11 @@ const editClassConfirm = () => {
     });
 };
 
-const confirmDelClass = (id:number) => {
+const confirmDelClass = (id: number) => {
   // console.log(id);
 
   deleteClass(id)
-    .then((res:any) => {
+    .then((res: any) => {
       if (res.data.code === 200) {
         ElMessage({
           message: "删除成功",

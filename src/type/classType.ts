@@ -31,6 +31,10 @@ export interface addformInt{
     introduce:string
 }
 
+export class addformData{
+    addForm:addformInt[]=[]
+}
+
 export interface eddformInt{
     id: number,
     image: string,
@@ -38,4 +42,8 @@ export interface eddformInt{
     teacher: string,
     hour:number,
     title:string
+}
+
+export class eddformData{
+    editForm:eddformInt[]=[]
 }
