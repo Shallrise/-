@@ -8,11 +8,19 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "/class",
-        meta:{
-            isShow:true,
-            title:"课程"
+        meta: {
+          isShow: true,
+          title: "课程管理",
         },
-        component:()=>import("../views/Class.vue")
+        component: () => import("../views/Class.vue"),
+      },
+      {
+        path: "/chapter",
+        meta: {
+          isShow: true,
+          title: "章节管理",
+        },
+        component: () => import("../views/Chapter.vue"),
       },
     ],
   },

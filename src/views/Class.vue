@@ -8,7 +8,7 @@
     >
   </div>
   <el-table :data="classDataList.records" style="width: 100%">
-    <el-table-column prop="image" label="封面" width="180">
+    <el-table-column prop="image" label="封面" width="140">
       <template #default="scope">
         <el-image
           :src="scope.row.image"
@@ -16,9 +16,11 @@
         ></el-image>
       </template>
     </el-table-column>
-    <el-table-column prop="title" label="课程名称" width="180" />
-    <el-table-column prop="teacher" label="授课老师" />
-    <el-table-column prop="hour" label="课时" />
+    <el-table-column prop="title" label="课程名称" width="140" />
+    <el-table-column prop="introduce" label="课程介绍" width="230"></el-table-column>
+    <el-table-column prop="teacher" label="授课老师" width="140"/>
+    <el-table-column prop="hour" label="课时" width="140"/>
+    <el-table-column prop="createTime" label="创建时间" width="170"/>
     <el-table-column label="操作">
       <template #default="scope">
         <el-button links size="large">
