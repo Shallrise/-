@@ -10,7 +10,7 @@ interface recodsInt {
     total: number;
   }
 
-  interface eddformInt{
+ export interface eddformInt{
     id: number;
     title: string;
     video:string;

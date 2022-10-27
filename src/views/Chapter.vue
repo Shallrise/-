@@ -70,7 +70,7 @@ import { ref, onMounted, reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { getChapter, addChapter, eddChapter } from "../api/chapter";
-import { ChapterData, addformData, eddformData } from "../type/chapterType";
+import { ChapterData, addformData, eddformData,eddformInt } from "../type/chapterType";
 
 const router = useRoute();
 const courseId = ref(router.query.courseId);
@@ -138,7 +138,7 @@ const closeEddDialog = () => {
   eddDialogVisible.value = false;
 };
 
-const editRow = (row: eddformData) => {
+const editRow = (row: eddformInt) => {
   openEddDialog();
   eddformData.editForm = row;
   // console.log(row);
