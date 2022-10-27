@@ -129,12 +129,12 @@ const getClassList = () => {
   });
 };
 
-const searchClass = (id:number) =>{
+const searchClass = (courseId:any) =>{
 // console.log(id);
 router.push({
   path:'/chapter',
   query:{
-    id:id
+    courseId:courseId
   }
 })
 }
