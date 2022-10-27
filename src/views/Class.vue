@@ -134,7 +134,7 @@ const searchClass = (id:number) =>{
 router.push({
   path:'/chapter',
   query:{
-    courseId:id
+    id:id
   }
 })
 }

@@ -73,7 +73,7 @@ import { getChapter, addChapter, eddChapter } from "../api/chapter";
 import { ChapterData, addformData, eddformData,eddformInt } from "../type/chapterType";
 
 const router = useRoute();
-// const courseId:number = ref(router.query.courseId) as Ref<>;
+const courseId:number = ref(router.query.id) as Ref<Number>;
 const chapterDataList = reactive(new ChapterData());
 const addFormList = reactive(new addformData());
 const eddFormList = reactive(new eddformData());
@@ -81,11 +81,9 @@ const eddFormList = reactive(new eddformData());
 const state = reactive<{
   addDialogVisible: boolean;
   eddDialogVisible: boolean;
-  courseId:number
 }>({
   addDialogVisible: false,
   eddDialogVisible: false,
-  courseId:router.query.courseId
 });
 
 const { addDialogVisible, eddDialogVisible } = toRefs(state);
