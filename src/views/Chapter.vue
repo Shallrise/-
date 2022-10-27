@@ -45,15 +45,15 @@
   </el-dialog>
   <!-- 编辑章节对话框 -->
   <el-dialog v-model="eddDialogVisible" title="编辑章节" width="30%" center>
-    <el-form :model="eddformData.editForm">
+    <el-form :model="eddFormList.editForm">
       <el-form-item label="章节id">
-        <el-input v-model="eddformData.editForm.id" />
+        <el-input v-model="eddFormList.editForm.id" />
       </el-form-item>
       <el-form-item label="课程视频">
-        <el-input v-model="eddformData.editForm.video" />
+        <el-input v-model="eddFormList.editForm.video" />
       </el-form-item>
       <el-form-item label="课程名称">
-        <el-input v-model="eddformData.editForm.title" />
+        <el-input v-model="eddFormList.editForm.title" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -140,12 +140,12 @@ const closeEddDialog = () => {
 
 const editRow = (row: eddformInt) => {
   openEddDialog();
-  eddformData.editForm = row;
+  eddFormList.editForm = row;
   // console.log(row);
 };
 
 const eddConfirm = () => {
-  eddChapter(eddformData.editForm)
+  eddChapter(eddFormList.editForm)
     .then((res: any) => {
       console.log(res);
       if (res.data.code === 200) {
