@@ -26,7 +26,7 @@
         <el-button links size="large">
           <el-icon><i-ep-Operation /></el-icon>
         </el-button>
-        <el-button links size="large">
+        <el-button links size="large" @click.prevent="searchClass(scope.row.id)">
           <el-icon><i-ep-FolderOpened /></el-icon>
         </el-button>
         <el-button links size="large" @click.prevent="editRow(scope.row)">
@@ -102,10 +102,12 @@ import { onMounted, reactive, toRefs, ref } from "vue";
 import { getList, addClass, editClass, deleteClass } from "../api/class";
 import { ClassData, addformData, eddformData,eddformInt } from "../type/classType";
 import { ElMessage } from "element-plus";
+import {useRouter} from 'vue-router'
 
 const classDataList = reactive(new ClassData());
 const addFormList = reactive(new addformData());
 const editFormList = reactive(new eddformData());
+const router = useRouter()
 
 const state = reactive<{
   addDialogVisible: boolean;
@@ -124,6 +126,16 @@ const getClassList = () => {
     classDataList.records = res.data.data.records;
   });
 };
+
+const searchClass = (id:number) =>{
+console.log(id);
+router.push({
+  path:'/chapter',
+  query:{
+    courseId:id
+  }
+})
+}
 
 const openAddDialog = () => {
   addDialogVisible.value = true;

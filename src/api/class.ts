@@ -1,4 +1,3 @@
-import axios from "axios";
 import createAxios from "../utils/requst";
 
 const api = {
