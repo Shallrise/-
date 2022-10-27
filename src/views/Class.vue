@@ -112,9 +112,11 @@ const router = useRouter()
 const state = reactive<{
   addDialogVisible: boolean;
   editDialogVisible: boolean;
+  courseId:number;
 }>({
   addDialogVisible: false,
   editDialogVisible: false,
+  courseId:0
 });
 
 const { addDialogVisible, editDialogVisible } =
@@ -128,7 +130,7 @@ const getClassList = () => {
 };
 
 const searchClass = (id:number) =>{
-console.log(id);
+// console.log(id);
 router.push({
   path:'/chapter',
   query:{
