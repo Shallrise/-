@@ -110,13 +110,13 @@ const state = reactive<{
   eddDialogVisible: boolean;
   delDialogVisible: boolean;
   deltitle: string;
-  delId:string
+  delId:number
 }>({
   addDialogVisible: false,
   eddDialogVisible: false,
   delDialogVisible: false,
   deltitle: "",
-  delId:""
+  delId:0
 });
 
 const { addDialogVisible, eddDialogVisible, delDialogVisible, deltitle,delId } =
@@ -214,7 +214,7 @@ const delRow = (row:eddformInt) => {
 };
 
 const delConfirm = () =>{
-  delChapter(delId.value).then((res)=>{
+  delChapter(delId.value).then((res:any)=>{
     if (res.data.code === 200) {
         ElMessage({
           message: "删除章节成功",
