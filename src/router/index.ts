@@ -37,6 +37,14 @@ const routes: Array<RouteRecordRaw> = [
           title:"课程管理"
         },
         component:() =>import("../views/Grades.vue")
+      },
+      {
+        path:"/image",
+        meta:{
+          show:true,
+          title:"上传图片测试"
+        },
+        component:() =>import("../views/Image.vue")
       }
     ],
   },
