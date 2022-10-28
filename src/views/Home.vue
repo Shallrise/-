@@ -21,14 +21,6 @@
               v-for="item in list"
               :key="item.path">{{item.meta.title}}</el-menu-item>
             </el-sub-menu>
-            <!-- <el-menu-item
-              :index="item.path"
-              v-for="item in list"
-              :key="item.path"
-            >
-              <el-icon><icon-menu /></el-icon>
-              <span>{{ item.meta.title }}</span>
-            </el-menu-item> -->
           </el-menu>
         </el-aside>
         <el-main><router-view></router-view></el-main>
