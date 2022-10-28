@@ -168,6 +168,8 @@ const closeEddDialog = () => {
 };
 
 const editRow = (row: recodsInt) => {
+    console.log(row);
+    
   eddFormList.addForm = row;
   openEddDialog();
 };
@@ -201,6 +203,8 @@ const closeDelDialog = () => {
 };
 
 const delRow = (row: recodsInt) => {
+    console.log(row);
+    
   delName.value = row.name;
   delId.value = row.id;
   openDelDialog();
