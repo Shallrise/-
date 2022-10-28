@@ -27,6 +27,7 @@ export function getChapter(courseId: number) {
 }
 
 export function addChapter(addFormList:addFormInt){
+    
     return createAxios({
         url:api.operaChapter,
         method:'post',
@@ -39,13 +40,24 @@ export function addChapter(addFormList:addFormInt){
 }
 
 export function eddChapter(edd:eddFormInt){
+    const videoUrl=edd.video.slice(26)
     return createAxios({
         url:api.operaChapter,
         method:'put',
         data:{
             title:edd.title,
-            video:edd.video,
+            video:videoUrl,
             id:edd.id
+        }
+    })
+}
+
+export function delChapter(sectionId:number){
+    return createAxios({
+        url:api.operaChapter,
+        method:'delete',
+        params:{
+            sectionId:sectionId
         }
     })
 }
