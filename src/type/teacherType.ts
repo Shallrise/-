@@ -23,13 +23,15 @@ export class teacherData {
 export interface addFormInt{
     name:string,
     sex:string,
-    introduce:string
+    introduce:string,
+    id:number
 }
 
 export class addformData {
     addForm: addFormInt = {
         name:'',
         sex: '',
-      introduce:''
+      introduce:'',
+      id:0
     };
   }
