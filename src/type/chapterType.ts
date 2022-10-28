@@ -1,5 +1,5 @@
 interface recodsInt {
-    courseId: number;
+    courseId: string;
     title: string;
     video:string;
   }
@@ -11,7 +11,7 @@ interface recodsInt {
   }
 
  export interface eddformInt{
-    id: number;
+    id: string;
     title: string;
     video:string;
   }
@@ -28,7 +28,7 @@ interface recodsInt {
 
   export class addformData {
     addForm: recodsInt = {
-      courseId:0,
+      courseId:'',
       title: "",
       video:''
     };
@@ -36,7 +36,7 @@ interface recodsInt {
 
   export class eddformData {
     editForm: eddformInt = {
-        id:0,
+        id:'',
         title: "",
         video:''
       };

@@ -110,7 +110,7 @@ const state = reactive<{
   eddDialogVisible: boolean;
   delDialogVisible: boolean;
   deltitle: string;
-  delId:number
+  delId:string;
 }>({
   addDialogVisible: false,
   eddDialogVisible: false,
@@ -137,7 +137,7 @@ const getChapterList = () => {
 
 const openAddDialog = () => {
   addDialogVisible.value = true;
-  addFormList.addForm.courseId=Number(courseId.value);
+  addFormList.addForm.courseId=courseId.value;
 };
 
 const closeAddDialog = () => {

@@ -5,7 +5,7 @@ const api = {
 };
 
 interface addFormInt{
-    courseId:number,
+    courseId:string,
     title:string,
     video:string
 }
@@ -13,10 +13,10 @@ interface addFormInt{
 interface eddFormInt{
     title:string,
     video:string,
-    id:number
+    id:string
 }
 
-export function getChapter(courseId: number) {
+export function getChapter(courseId: string) {
   return createAxios({
     url: api.operaChapter,
     method: "get",
@@ -52,7 +52,7 @@ export function eddChapter(edd:eddFormInt){
     })
 }
 
-export function delChapter(sectionId:number){
+export function delChapter(sectionId:string){
     return createAxios({
         url:api.operaChapter,
         method:'delete',
