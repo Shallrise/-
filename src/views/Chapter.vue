@@ -137,7 +137,7 @@ const getChapterList = () => {
 
 const openAddDialog = () => {
   addDialogVisible.value = true;
-  addFormList.addForm.courseId=courseId.value;
+  addFormList.addForm.courseId=Number(courseId.value);
 };
 
 const closeAddDialog = () => {
