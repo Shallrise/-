@@ -34,7 +34,7 @@
   <el-dialog v-model="addDialogVisible" title="添加章节" width="30%" center>
     <el-form :model="addFormList.addForm">
       <el-form-item label="课程序列id">
-        <el-input v-model="courseId" disabled />
+        <el-input v-model="addFormList.addForm.courseId" disabled />
       </el-form-item>
       <el-form-item label="课程视频">
         <el-input v-model="addFormList.addForm.video" />
@@ -116,7 +116,7 @@ const state = reactive<{
   eddDialogVisible: false,
   delDialogVisible: false,
   deltitle: "",
-  delId:0
+  delId:"",
 });
 
 const { addDialogVisible, eddDialogVisible, delDialogVisible, deltitle,delId } =
@@ -137,6 +137,7 @@ const getChapterList = () => {
 
 const openAddDialog = () => {
   addDialogVisible.value = true;
+  addFormList.addForm.courseId=courseId.value;
 };
 
 const closeAddDialog = () => {
