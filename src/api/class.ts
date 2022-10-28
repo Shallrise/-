@@ -1,7 +1,7 @@
 import createAxios from "../utils/requst";
 
 const api = {
-    operaclass:'/admin/course'
+    operateach:'/admin/course'
 }
 
 interface operaForm{
@@ -23,14 +23,14 @@ interface editClassForm{
 
 export function getList(){
     return createAxios({
-        url:api.operaclass,
+        url:api.operateach,
         method:'get'
     })
 }
 
 export function addClass(addform:operaForm){
     return createAxios({
-        url:api.operaclass,
+        url:api.operateach,
         method:'post',
         data:{
             title:addform.title,
@@ -44,7 +44,7 @@ export function addClass(addform:operaForm){
 
 export function editClass(editform:editClassForm){
     return createAxios({
-        url:api.operaclass,
+        url:api.operateach,
         method:'put',
         data:{
             title:editform.title,
@@ -59,7 +59,7 @@ export function editClass(editform:editClassForm){
 
 export function deleteClass(id:number){
     return createAxios({
-        url:api.operaclass,
+        url:api.operateach,
         method:'delete',
         params:{
             courseId:id

@@ -25,10 +25,18 @@ const routes: Array<RouteRecordRaw> = [
       {
         path:"/teacher",
         meta:{
-          isShow:true,
+          show:true,
           title:"讲师管理"
         },
         component:() => import("../views/Teacher.vue")
+      },
+      {
+        path:"/grade",
+        meta:{
+          show:true,
+          title:"课程管理"
+        },
+        component:() =>import("../views/Grades.vue")
       }
     ],
   },

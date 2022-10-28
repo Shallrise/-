@@ -26,6 +26,7 @@ declare module '@vue/runtime-core' {
     IEpFolderOpened: typeof import('~icons/ep/folder-opened')['default']
     IEpOperation: typeof import('~icons/ep/operation')['default']
     IEpPlus: typeof import('~icons/ep/plus')['default']
+    IEpPrinter: typeof import('~icons/ep/printer')['default']
     IEpSearch: typeof import('~icons/ep/search')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -20,7 +20,10 @@
               <el-menu-item :index="item.path"
               v-for="item in list"
               :key="item.path">{{item.meta.title}}</el-menu-item>
-            </el-sub-menu>
+            </el-sub-menu>  
+              <el-menu-item :index="item.path"
+              v-for="item in l"
+              :key="item.path"><el-icon><i-ep-Printer /></el-icon>{{item.meta.title}}</el-menu-item>
           </el-menu>
         </el-aside>
         <el-main><router-view></router-view></el-main>
@@ -35,6 +38,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const list = router.getRoutes().filter((v) => v.meta.isShow);
+const l = router.getRoutes().filter((v)=>v.meta.show)
 </script>
 
 <style lang="scss" scoped>
