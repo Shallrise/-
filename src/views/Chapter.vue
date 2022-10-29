@@ -83,7 +83,7 @@
       <el-form-item label="课程视频">
         <!-- <el-input v-model="addFormList.addForm.video" /> -->
         <el-upload
-          v-model:file-list="fileList"
+          v-model:file-list="fileLis"
           class="upload-demo"
           action="/api/upload/video"
           name="video"
@@ -141,7 +141,8 @@ const courseId: any = ref(router.query.courseId);
 const chapterDataList = reactive(new ChapterData());
 const addFormList = reactive(new addformData());
 const eddFormList = reactive(new eddformData());
-const fileList = ref<UploadUserFile[]>([]);
+const fileList = ref<any[]>([]);
+const fileLis = ref<any[]>([]);
 
 const state = reactive<{
   addDialogVisible: boolean;
