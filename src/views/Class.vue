@@ -222,7 +222,7 @@ const openEditDialog = () => {
 };
 
 const editRow = (editData: eddformInt) => {
-  const url:string = ref('')
+  const url = ref<string>('')
   url.value=editData.image
   fileLis.value.push({
     'url':url

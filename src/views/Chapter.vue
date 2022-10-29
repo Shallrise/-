@@ -5,7 +5,7 @@
     >
   </div>
   <el-table :data="chapterDataList.records" style="width: 100%">
-    <el-table-column prop="id" label="章节序列" width="140" />
+    <!-- <el-table-column prop="id" label="章节序列" width="140" /> -->
     <el-table-column prop="video" label="视频" width="200">
       <template #default="scope">
         <video controls muted style="width: 200px; height: 200px">
@@ -217,7 +217,7 @@ const closeEddDialog = () => {
 };
 
 const editRow = (row: eddformInt) => {
-  const url:string = ref('')
+  const url = ref<string>('')
   url.value=row.video
   fileList.value.push({
     'url':url

@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         path:"/grade",
         meta:{
           show:true,
-          title:"课程管理"
+          title:"班级管理"
         },
         component:() =>import("../views/Grades.vue")
       },

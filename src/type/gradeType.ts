@@ -5,7 +5,9 @@ export interface recodsInt {
     number:number,
     publicity:string,
     description:string,
-    createTime:string
+    createTime:string,
+    image:string,
+    name:string,
   }
 
 interface pageDataInt {
@@ -26,13 +28,17 @@ export class gradeData {
 export interface addFormInt{
     className:string,
     publicity:string,
-    description:string
+    description:string,
+    image:string,
+    lecturerId:number
 }
   export class addformData {
     addForm: addFormInt = {
         className:'',
         publicity:'',
-        description:''
+        description:'',
+        image:'',
+        lecturerId:0
     };
   }
  

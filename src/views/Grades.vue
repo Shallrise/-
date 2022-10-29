@@ -13,11 +13,20 @@
     >
   </div>
   <el-table :data="gradeDataList.records" style="width: 100%">
+  <el-table-column prop="image" label="封面" width="140">
+      <template #default="scope">
+        <el-image
+          :src="scope.row.image"
+          style="width: 100px; height: 100px"
+        ></el-image>
+      </template>
+    </el-table-column>
     <el-table-column prop="className" label="班级名称" align="center" />
-    <el-table-column prop="code" label="班级编码" align="center" />
-    <el-table-column prop="number" label="班级人数" align="center" />
+    <el-table-column prop="code" label="班级编码" align="center" width="100px" />
+    <el-table-column prop="number" label="班级人数" align="center" width="100px" />
     <el-table-column prop="publicity" label="是否为公开课" align="center" />
-    <el-table-column prop="description" label="班级介绍" align="center" />
+    <el-table-column prop="description" label="班级介绍" align="center"  />
+    <el-table-column prop="name" label="班级讲师" align="center" />
     <el-table-column prop="createTime" label="创建时间" align="center" />
     <el-table-column label="操作" align="center">
       <template #default="scope">
@@ -47,6 +56,29 @@
       <el-form-item label="班级介绍">
         <el-input v-model="addDataList.addForm.description" />
       </el-form-item>
+      <el-form-item label="讲师id">
+        <el-input v-model="addDataList.addForm.lecturerId" />
+      </el-form-item>
+      <el-form-item label="封面">
+        <!-- <el-input v-model="addFormList.addForm.image" /> -->
+        <el-upload
+          v-model:file-list="fileList"
+          class="upload-demo"
+          action="/api/upload/image"
+          name="image"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -66,6 +98,25 @@
       </el-form-item>
       <el-form-item label="班级介绍">
         <el-input v-model="eddFormList.addForm.description" />
+      </el-form-item>
+      <el-form-item label="封面">
+        <el-upload
+          v-model:file-list="fileLis"
+          class="upload-demo"
+          action="/api/upload/image"
+          name="image"
+          :on-preview="handlePrevie"
+          :on-remove="handleRemov"
+          :on-success="handleSucce"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -91,15 +142,18 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs,ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
+import type { UploadProps, UploadUserFile } from 'element-plus'
 import { getClass, searchgrade, addGrade, eddGrade ,delGrade} from "../api/grade";
 import { gradeData, addformData, recodsInt } from "../type/gradeType";
 
 const gradeDataList = reactive(new gradeData());
 const addDataList = reactive(new addformData());
 const eddFormList = reactive(new addformData());
+const fileList = ref<UploadUserFile[]>([])
+const fileLis = ref<UploadUserFile[]>([])
 
 const state = reactive<{
   addDialogVisible: boolean;
@@ -154,6 +208,19 @@ const openAddDialog = () => {
 const closeAddDialog = () => {
   addDialogVisible.value = false;
 };
+const handleSuccess = (res:any) =>{
+  addDataList.addForm.image=res.data.path
+  console.log(res.data.actPath);
+  
+}
+
+const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
+}
+
+const handlePreview: UploadProps['onPreview'] = (file) => {
+  console.log(file)
+}
 
 const addConfirm = () => {
   addGrade(addDataList.addForm)
@@ -183,12 +250,30 @@ const closeEddDialog = () => {
   eddDialogVisible.value = false;
 };
 
+const handleSucce = (res:any) =>{
+    eddFormList.addForm.image=res.data.path
+}
+
+const handleRemov: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
+}
+
+const handlePrevie: UploadProps['onPreview'] = (file) => {
+  console.log(file)
+}
+
 const editRow = (row: recodsInt) => {
+const url = ref<string>('')
+  url.value=row.image
+  fileLis.value.push({
+    'url':url
+  })
   openEddDialog();
   eddFormList.addForm.className = row.className;
   eddFormList.addForm.publicity = row.publicity;
   eddFormList.addForm.description = row.description;
   eddId.value=row.id
+  editFormList.addForm.image=fileLis.value[0].url
   // console.log(row);
 };
 

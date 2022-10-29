@@ -32,7 +32,9 @@ export function addGrade(addForm:addFormInt){
         data:{
             className:addForm.className,
             publicity:addForm.publicity,
-            description:addForm.description
+            description:addForm.description,
+            lecturerId:addForm.lecturerId,
+            image:addForm.image
         }
     })
 }
@@ -45,7 +47,8 @@ export function eddGrade(eddForm:addFormInt,id:number){
             className:eddForm.className,
             publicity:eddForm.publicity,
             description:eddForm.description,
-            id:id
+            id:id,
+            image:eddForm.image
         }
     })
 }
