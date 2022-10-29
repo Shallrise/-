@@ -174,13 +174,13 @@ import {
   eddGrade,
   delGrade,
 } from "../api/grade";
-import { gradeData, addformData, recodsInt } from "../type/gradeType";
+import { gradeData, addformData, recodsInt,eddformData } from "../type/gradeType";
 import { teacherData } from "../type/teacherType";
 import { getTeacher } from "../api/teacher";
 
 const gradeDataList = reactive(new gradeData());
 const addDataList = reactive(new addformData());
-const eddFormList = reactive(new addformData());
+const eddFormList = reactive(new eddformData());
 const teacherList = reactive(new teacherData());
 const fileList = ref<any[]>([]);
 const fileLis = ref<any[]>([]);
