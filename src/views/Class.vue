@@ -160,13 +160,15 @@ const state = reactive<{
   addDialogVisible: boolean;
   editDialogVisible: boolean;
   courseId: number;
+  url:string
 }>({
   addDialogVisible: false,
   editDialogVisible: false,
   courseId: 0,
+  url:''
 });
 
-const { addDialogVisible, editDialogVisible } = toRefs(state);
+const { addDialogVisible, editDialogVisible,url } = toRefs(state);
 
 const getClassList = () => {
   getList().then((res: any) => {
@@ -222,7 +224,6 @@ const openEditDialog = () => {
 };
 
 const editRow = (editData: eddformInt) => {
-  const url = ref<string>('')
   url.value=editData.image
   fileLis.value.push({
     'url':url

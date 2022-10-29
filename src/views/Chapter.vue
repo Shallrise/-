@@ -149,12 +149,14 @@ const state = reactive<{
   delDialogVisible: boolean;
   deltitle: string;
   delId: string;
+  url:string
 }>({
   addDialogVisible: false,
   eddDialogVisible: false,
   delDialogVisible: false,
   deltitle: "",
   delId: "",
+  url:''
 });
 
 const {
@@ -163,6 +165,7 @@ const {
   delDialogVisible,
   deltitle,
   delId,
+  url
 } = toRefs(state);
 
 const getChapterList = () => {
@@ -217,7 +220,6 @@ const closeEddDialog = () => {
 };
 
 const editRow = (row: eddformInt) => {
-  const url = ref<string>('')
   url.value=row.video
   fileList.value.push({
     'url':url

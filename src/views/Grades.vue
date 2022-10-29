@@ -13,7 +13,7 @@
     >
   </div>
   <el-table :data="gradeDataList.records" style="width: 100%">
-  <el-table-column prop="image" label="封面" width="140">
+    <el-table-column prop="image" label="封面" width="140">
       <template #default="scope">
         <el-image
           :src="scope.row.image"
@@ -22,10 +22,20 @@
       </template>
     </el-table-column>
     <el-table-column prop="className" label="班级名称" align="center" />
-    <el-table-column prop="code" label="班级编码" align="center" width="100px" />
-    <el-table-column prop="number" label="班级人数" align="center" width="100px" />
+    <el-table-column
+      prop="code"
+      label="班级编码"
+      align="center"
+      width="100px"
+    />
+    <el-table-column
+      prop="number"
+      label="班级人数"
+      align="center"
+      width="100px"
+    />
     <el-table-column prop="publicity" label="是否为公开课" align="center" />
-    <el-table-column prop="description" label="班级介绍" align="center"  />
+    <el-table-column prop="description" label="班级介绍" align="center" />
     <el-table-column prop="name" label="班级讲师" align="center" />
     <el-table-column prop="createTime" label="创建时间" align="center" />
     <el-table-column label="操作" align="center">
@@ -58,7 +68,10 @@
       </el-form-item>
       <el-form-item label="讲师id">
         <!-- <el-input v-model="addDataList.addForm.lecturerId" /> -->
-        <el-select v-model="addDataList.addForm.lecturerId" placeholder="请选择角色">
+        <el-select
+          v-model="addDataList.addForm.lecturerId"
+          placeholder="请选择角色"
+        >
           <el-option
             v-for="item in teacherList.records"
             :key="item.id"
@@ -135,7 +148,7 @@
     </template>
   </el-dialog>
   <!-- 删除班级对话框 -->
-   <el-dialog v-model="delDialogVisible" title="删除班级" width="30%" center>
+  <el-dialog v-model="delDialogVisible" title="删除班级" width="30%" center>
     <div class="warning custom-block">
       <p class="custom-block-title">warning</p>
       <p>确定删除班级 {{ delName }}？</p>
@@ -150,41 +163,58 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, toRefs,ref } from "vue";
+import { reactive, onMounted, toRefs, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import type { UploadProps, UploadUserFile } from 'element-plus'
-import { getClass, searchgrade, addGrade, eddGrade ,delGrade} from "../api/grade";
+import type { UploadProps, UploadUserFile } from "element-plus";
+import {
+  getClass,
+  searchgrade,
+  addGrade,
+  eddGrade,
+  delGrade,
+} from "../api/grade";
 import { gradeData, addformData, recodsInt } from "../type/gradeType";
-import {teacherData} from "../type/teacherType"
-import {getTeacher} from "../api/teacher"
+import { teacherData } from "../type/teacherType";
+import { getTeacher } from "../api/teacher";
 
 const gradeDataList = reactive(new gradeData());
 const addDataList = reactive(new addformData());
 const eddFormList = reactive(new addformData());
-const teacherList = reactive(new teacherData())
-const fileList = ref<UploadUserFile[]>([])
-const fileLis = ref<UploadUserFile[]>([])
+const teacherList = reactive(new teacherData());
+const fileList = ref<UploadUserFile[]>([]);
+const fileLis = ref<UploadUserFile[]>([]);
 
 const state = reactive<{
   addDialogVisible: boolean;
   keywordGrap: string;
   eddDialogVisible: boolean;
-  eddId:number;
-  delName :string;
-  delDialogVisible:boolean,
-  delId:number
+  eddId: number;
+  delName: string;
+  delDialogVisible: boolean;
+  delId: number;
+  url: string;
 }>({
   addDialogVisible: false,
   keywordGrap: "",
   eddDialogVisible: false,
-  eddId:0,
-  delName:'',
-  delDialogVisible:false,
-  delId:0
+  eddId: 0,
+  delName: "",
+  delDialogVisible: false,
+  delId: 0,
+  url: "",
 });
 
-const { addDialogVisible, keywordGrap, eddDialogVisible,eddId,delName,delDialogVisible,delId } = toRefs(state);
+const {
+  addDialogVisible,
+  keywordGrap,
+  eddDialogVisible,
+  eddId,
+  delName,
+  delDialogVisible,
+  delId,
+  url
+} = toRefs(state);
 
 const getList = () => {
   getClass()
@@ -199,8 +229,8 @@ const getList = () => {
     });
 };
 
-const getTeacherList = () =>{
-    getTeacher()
+const getTeacherList = () => {
+  getTeacher()
     .then((res: any) => {
       teacherList.records = res.data.data.records;
       console.log(teacherList.records);
@@ -211,7 +241,7 @@ const getTeacherList = () =>{
         type: "error",
       });
     });
-}
+};
 
 const searchGradeList = () => {
   searchgrade(keywordGrap.value)
@@ -233,19 +263,18 @@ const openAddDialog = () => {
 const closeAddDialog = () => {
   addDialogVisible.value = false;
 };
-const handleSuccess = (res:any) =>{
-  addDataList.addForm.image=res.data.path
+const handleSuccess = (res: any) => {
+  addDataList.addForm.image = res.data.path;
   console.log(res.data.actPath);
-  
-}
+};
 
-const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
-  console.log(uploadFile, uploadFiles)
-}
+const handleRemove: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles);
+};
 
-const handlePreview: UploadProps['onPreview'] = (file) => {
-  console.log(file)
-}
+const handlePreview: UploadProps["onPreview"] = (file) => {
+  console.log(file);
+};
 
 const addConfirm = () => {
   addGrade(addDataList.addForm)
@@ -275,35 +304,34 @@ const closeEddDialog = () => {
   eddDialogVisible.value = false;
 };
 
-const handleSucce = (res:any) =>{
-    eddFormList.addForm.image=res.data.path
-}
+const handleSucce = (res: any) => {
+  eddFormList.addForm.image = res.data.path;
+};
 
-const handleRemov: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
-  console.log(uploadFile, uploadFiles)
-}
+const handleRemov: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles);
+};
 
-const handlePrevie: UploadProps['onPreview'] = (file) => {
-  console.log(file)
-}
+const handlePrevie: UploadProps["onPreview"] = (file) => {
+  console.log(file);
+};
 
 const editRow = (row: recodsInt) => {
-const url = ref<string>('')
-  url.value=row.image
+  url.value = row.image;
   fileLis.value.push({
-    'url':url
-  })
+    url: url,
+  });
   openEddDialog();
   eddFormList.addForm.className = row.className;
   eddFormList.addForm.publicity = row.publicity;
   eddFormList.addForm.description = row.description;
-  eddId.value=row.id
-  editFormList.addForm.image=fileLis.value[0].url
+  eddId.value = row.id;
+  editFormList.addForm.image = fileLis.value[0].url;
   // console.log(row);
 };
 
 const eddConfirm = () => {
-  eddGrade(eddFormList.addForm,eddId.value)
+  eddGrade(eddFormList.addForm, eddId.value)
     .then((res: any) => {
       if (res.data.code == 200) {
         ElMessage({
@@ -322,39 +350,40 @@ const eddConfirm = () => {
     });
 };
 
-const openDelDialog = () =>{
-    delDialogVisible.value=true
-}
+const openDelDialog = () => {
+  delDialogVisible.value = true;
+};
 
-const closeDelDialog = () =>{
-    delDialogVisible.value=false
-}
+const closeDelDialog = () => {
+  delDialogVisible.value = false;
+};
 
-const delRow = (row:recodsInt) =>{
-    delName.value=row.className
-    delId.value=row.id
-openDelDialog()
-// console.log(row);
+const delRow = (row: recodsInt) => {
+  delName.value = row.className;
+  delId.value = row.id;
+  openDelDialog();
+  // console.log(row);
+};
 
-}
-
-const delConfirm = () =>{
-    delGrade(delId.value).then((res)=>{
-        if (res.data.code == 200) {
+const delConfirm = () => {
+  delGrade(delId.value)
+    .then((res) => {
+      if (res.data.code == 200) {
         ElMessage({
           message: "删除班级成功",
           type: "success",
         });
       }
-      closeDelDialog()
-      getList()
-    }).catch((err) => {
+      closeDelDialog();
+      getList();
+    })
+    .catch((err) => {
       ElMessage({
         message: err.msg,
         type: "error",
       });
     });
-}
+};
 
 onMounted(() => {
   getList();
