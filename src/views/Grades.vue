@@ -57,7 +57,15 @@
         <el-input v-model="addDataList.addForm.description" />
       </el-form-item>
       <el-form-item label="讲师id">
-        <el-input v-model="addDataList.addForm.lecturerId" />
+        <!-- <el-input v-model="addDataList.addForm.lecturerId" /> -->
+        <el-select v-model="addDataList.addForm.lecturerId" placeholder="请选择角色">
+          <el-option
+            v-for="item in teacherList.records"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="封面">
         <!-- <el-input v-model="addFormList.addForm.image" /> -->
@@ -148,10 +156,13 @@ import { Search } from "@element-plus/icons-vue";
 import type { UploadProps, UploadUserFile } from 'element-plus'
 import { getClass, searchgrade, addGrade, eddGrade ,delGrade} from "../api/grade";
 import { gradeData, addformData, recodsInt } from "../type/gradeType";
+import {teacherData} from "../type/teacherType"
+import {getTeacher} from "../api/teacher"
 
 const gradeDataList = reactive(new gradeData());
 const addDataList = reactive(new addformData());
 const eddFormList = reactive(new addformData());
+const teacherList = reactive(new teacherData())
 const fileList = ref<UploadUserFile[]>([])
 const fileLis = ref<UploadUserFile[]>([])
 
@@ -187,6 +198,20 @@ const getList = () => {
       });
     });
 };
+
+const getTeacherList = () =>{
+    getTeacher()
+    .then((res: any) => {
+      teacherList.records = res.data.data.records;
+      console.log(teacherList.records);
+    })
+    .catch((err) => {
+      ElMessage({
+        message: err.data.msg,
+        type: "error",
+      });
+    });
+}
 
 const searchGradeList = () => {
   searchgrade(keywordGrap.value)
@@ -333,6 +358,7 @@ const delConfirm = () =>{
 
 onMounted(() => {
   getList();
+  getTeacherList();
 });
 </script>
 
