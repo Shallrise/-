@@ -153,8 +153,8 @@ const classDataList = reactive(new ClassData());
 const addFormList = reactive(new addformData());
 const editFormList = reactive(new eddformData());
 const router = useRouter();
-const fileList = ref<UploadUserFile[]>([])
-const fileLis = ref<UploadUserFile[]>([])
+const fileList = ref<any[]>([])
+const fileLis = ref<any[]>([])
 
 const state = reactive<{
   addDialogVisible: boolean;

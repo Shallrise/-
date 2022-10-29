@@ -182,8 +182,8 @@ const gradeDataList = reactive(new gradeData());
 const addDataList = reactive(new addformData());
 const eddFormList = reactive(new addformData());
 const teacherList = reactive(new teacherData());
-const fileList = ref<UploadUserFile[]>([]);
-const fileLis = ref<UploadUserFile[]>([]);
+const fileList = ref<any[]>([]);
+const fileLis = ref<any[]>([]);
 
 const state = reactive<{
   addDialogVisible: boolean;
