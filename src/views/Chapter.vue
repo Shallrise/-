@@ -222,12 +222,12 @@ const closeEddDialog = () => {
 const editRow = (row: eddformInt) => {
   url.value=row.video
   fileList.value.push({
-    'url':url
+    url:url
   })
   openEddDialog();
   eddFormList.editForm = row;
   addFormList.addForm.video=fileList.value[0].url
-  console.log(row);
+  console.log(fileList.value[0].url);
 };
 
 const eddConfirm = () => {
