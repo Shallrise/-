@@ -17,16 +17,21 @@
       </template>
     </el-table-column>
     <el-table-column prop="title" label="课程名称" width="140" />
-    <el-table-column prop="introduce" label="课程介绍" width="230"></el-table-column>
-    <el-table-column prop="teacher" label="授课老师" width="140"/>
-    <el-table-column prop="hour" label="课时" width="140"/>
-    <el-table-column prop="createTime" label="创建时间" width="170"/>
+    <el-table-column
+      prop="introduce"
+      label="课程介绍"
+      width="230"
+    ></el-table-column>
+    <el-table-column prop="teacher" label="授课讲师" width="140" />
+    <el-table-column prop="hour" label="课时" width="140" />
+    <el-table-column prop="createTime" label="创建时间" width="170" />
     <el-table-column label="操作">
       <template #default="scope">
-        <el-button links size="large">
-          <el-icon><i-ep-Operation /></el-icon>
-        </el-button>
-        <el-button links size="large" @click.prevent="searchClass(scope.row.id)">
+        <el-button
+          links
+          size="large"
+          @click.prevent="searchClass(scope.row.id)"
+        >
           <el-icon><i-ep-FolderOpened /></el-icon>
         </el-button>
         <el-button links size="large" @click.prevent="editRow(scope.row)">
@@ -49,17 +54,34 @@
       <el-form-item label="课程名称">
         <el-input v-model="addFormList.addForm.title" />
       </el-form-item>
-      <el-form-item label="授课老师">
-        <el-input v-model="addFormList.addForm.teacher" />
+      <el-form-item label="讲师号">
+        <el-input v-model="addFormList.addForm.teacherId" />
       </el-form-item>
       <el-form-item label="课时">
         <el-input v-model="addFormList.addForm.hour" />
       </el-form-item>
-      <el-form-item label="封面">
-        <el-input v-model="addFormList.addForm.image" />
-      </el-form-item>
       <el-form-item label="课程介绍">
         <el-input v-model="addFormList.addForm.introduce" />
+      </el-form-item>
+      <el-form-item label="封面">
+        <!-- <el-input v-model="addFormList.addForm.image" /> -->
+        <el-upload
+          v-model:file-list="fileList"
+          class="upload-demo"
+          action="/api/upload/image"
+          name="image"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -75,14 +97,31 @@
       <el-form-item label="课程名称" prop="title">
         <el-input v-model="editFormList.editForm.title" />
       </el-form-item>
-      <el-form-item label="授课老师">
-        <el-input v-model="editFormList.editForm.teacher" />
+      <el-form-item label="讲师号">
+        <el-input v-model="editFormList.editForm.teacherId" />
       </el-form-item>
       <el-form-item label="课时">
         <el-input v-model="editFormList.editForm.hour" />
       </el-form-item>
       <el-form-item label="封面">
-        <el-input v-model="editFormList.editForm.image" />
+        <!-- <el-input v-model="editFormList.editForm.image" /> -->
+        <el-upload
+          v-model:file-list="fileLis"
+          class="upload-demo"
+          action="/api/upload/image"
+          name="image"
+          :on-preview="handlePrevie"
+          :on-remove="handleRemov"
+          :on-success="handleSucce"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
       <el-form-item label="课程介绍">
         <el-input v-model="editFormList.editForm.introduce" />
@@ -100,28 +139,34 @@
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, ref } from "vue";
 import { getList, addClass, editClass, deleteClass } from "../api/class";
-import { ClassData, addformData, eddformData,eddformInt } from "../type/classType";
+import {
+  ClassData,
+  addformData,
+  eddformData,
+  eddformInt,
+} from "../type/classType";
 import { ElMessage } from "element-plus";
-import {useRouter} from 'vue-router'
+import type { UploadProps, UploadUserFile } from 'element-plus'
+import { useRouter } from "vue-router";
 
 const classDataList = reactive(new ClassData());
 const addFormList = reactive(new addformData());
 const editFormList = reactive(new eddformData());
-const router = useRouter()
+const router = useRouter();
+const fileList = ref<UploadUserFile[]>([])
+const fileLis = ref<UploadUserFile[]>([])
 
 const state = reactive<{
   addDialogVisible: boolean;
   editDialogVisible: boolean;
-  courseId:number;
+  courseId: number;
 }>({
   addDialogVisible: false,
   editDialogVisible: false,
-  courseId:0
+  courseId: 0,
 });
 
-const { addDialogVisible, editDialogVisible } =
-  toRefs(state);
-
+const { addDialogVisible, editDialogVisible } = toRefs(state);
 
 const getClassList = () => {
   getList().then((res: any) => {
@@ -129,15 +174,15 @@ const getClassList = () => {
   });
 };
 
-const searchClass = (courseId:any) =>{
-// console.log(id);
-router.push({
-  path:'/chapter',
-  query:{
-    courseId:courseId
-  }
-})
-}
+const searchClass = (courseId: any) => {
+  // console.log(id);
+  router.push({
+    path: "/chapter",
+    query: {
+      courseId: courseId,
+    },
+  });
+};
 
 const openAddDialog = () => {
   addDialogVisible.value = true;
@@ -149,7 +194,7 @@ const closeAddDialog = () => {
 
 const handleConfirm = () => {
   addClass(addFormList.addForm)
-    .then((res:any) => {
+    .then((res: any) => {
       if (res.data.code === 200) {
         ElMessage({
           message: "添加成功",
@@ -177,8 +222,16 @@ const openEditDialog = () => {
 };
 
 const editRow = (editData: eddformInt) => {
+  const url = editData.image
+  fileLis.value.push({
+    'url':url
+  })
   openEditDialog();
   editFormList.editForm = editData;
+  // console.log(editData);
+  // console.log(fileLis.value[0].url);
+  editFormList.editForm.image=fileLis.value[0].url
+  
 };
 
 const editClassConfirm = () => {
@@ -220,6 +273,32 @@ const confirmDelClass = (id: number) => {
       });
     });
 };
+
+const handleSuccess = (res:any)=>{
+  addFormList.addForm.image=res.data.path
+    // console.log(res.data.path);
+    // console.log(res.data.actPath);
+}
+
+const handleSucce = (res:any) =>{
+  editFormList.editForm.image=res.data.actPath
+}
+
+const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
+}
+
+const handlePreview: UploadProps['onPreview'] = (file) => {
+  console.log(file)
+}
+
+const handleRemov: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
+}
+
+const handlePrevie: UploadProps['onPreview'] = (file) => {
+  console.log(file)
+}
 
 onMounted(() => {
   getClassList();

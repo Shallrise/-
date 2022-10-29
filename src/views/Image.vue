@@ -1,66 +1,42 @@
 <template>
-  <el-upload action="#" list-type="picture-card" :auto-upload="false">
-    <el-icon><Plus /></el-icon>
-
-    <template #file="{ file }">
-      <div>
-        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-        <span class="el-upload-list__item-actions">
-          <span
-            class="el-upload-list__item-preview"
-            @click="handlePictureCardPreview(file)"
-          >
-            <el-icon><zoom-in /></el-icon>
-          </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleDownload(file)"
-          >
-            <el-icon><Download /></el-icon>
-          </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleRemove(file)"
-          >
-            <el-icon><Delete /></el-icon>
-          </span>
-        </span>
+  <el-upload
+    v-model:file-list="fileList"
+    class="upload-demo"
+    action='/api/upload/video'
+    name="video"
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :on-success="handleSuccess"
+    list-type="picture"
+  >
+    <el-button type="primary">点击上传视频</el-button>
+    <template #tip>
+      <div class="el-upload__tip">
+        jpg/png files with a size less than 500kb
       </div>
     </template>
   </el-upload>
-
-  <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
-  </el-dialog>
-
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
-import type { UploadFile } from 'element-plus'
+import type { UploadProps, UploadUserFile } from 'element-plus'
 
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
-const disabled = ref(false)
+const fileList = ref<UploadUserFile[]>([])
 
-const handleRemove = (file: UploadFile) => {
-  console.log(file)
+const handleSuccess = (res:any)=>{
+    console.log(res.data.path);
+    console.log(res.data.actPath);
 }
 
-const handlePictureCardPreview = (file: UploadFile) => {
-  dialogImageUrl.value = file.url!
-  dialogVisible.value = true
+const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
 }
 
-const handleDownload = (file: UploadFile) => {
+const handlePreview: UploadProps['onPreview'] = (file) => {
   console.log(file)
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -6,7 +6,7 @@ const api = {
 
 interface operaForm{
     title:string,
-    teacher:string,
+    teacherId:number,
     hour:string,
     image:string,
     introduce:string,
@@ -14,7 +14,7 @@ interface operaForm{
 
 interface editClassForm{
     title:string,
-    teacher:string,
+    teacherId:number,
     hour:number,
     image:string,
     introduce:string,
@@ -34,7 +34,7 @@ export function addClass(addform:operaForm){
         method:'post',
         data:{
             title:addform.title,
-            teacher:addform.teacher,
+            teacherId:addform.teacherId,
             hour:addform.hour,
             image:addform.image,
             introduce:addform.introduce
@@ -43,14 +43,15 @@ export function addClass(addform:operaForm){
 }
 
 export function editClass(editform:editClassForm){
+    const imageUrl=editform.image.slice(33)
     return createAxios({
         url:api.operateach,
         method:'put',
         data:{
             title:editform.title,
-            teacher:editform.teacher,
+            teacherId:editform.teacherId,
             hour:editform.hour,
-            image:editform.image,
+            image:imageUrl,
             introduce:editform.introduce,
             id:editform.id
         }

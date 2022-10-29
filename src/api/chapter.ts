@@ -40,7 +40,7 @@ export function addChapter(addFormList:addFormInt){
 }
 
 export function eddChapter(edd:eddFormInt){
-    const videoUrl=edd.video.slice(26)
+    const videoUrl=edd.video.slice(33)
     return createAxios({
         url:api.operaChapter,
         method:'put',

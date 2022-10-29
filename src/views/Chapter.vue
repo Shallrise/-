@@ -36,11 +36,29 @@
       <el-form-item label="课程序列id">
         <el-input v-model="addFormList.addForm.courseId" disabled />
       </el-form-item>
-      <el-form-item label="课程视频">
-        <el-input v-model="addFormList.addForm.video" />
-      </el-form-item>
+      
       <el-form-item label="课程名称">
         <el-input v-model="addFormList.addForm.title" />
+      </el-form-item>
+      <el-form-item label="课程视频">
+        <!-- <el-input v-model="addFormList.addForm.video" /> -->
+        <el-upload
+          v-model:file-list="fileList"
+          class="upload-demo"
+          action="/api/upload/video"
+          name="video"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传视频</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -56,11 +74,31 @@
       <el-form-item label="章节id">
         <el-input v-model="eddFormList.editForm.id" />
       </el-form-item>
-      <el-form-item label="课程视频">
+      <!-- <el-form-item label="课程视频">
         <el-input v-model="eddFormList.editForm.video" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="课程名称">
         <el-input v-model="eddFormList.editForm.title" />
+      </el-form-item>
+      <el-form-item label="课程视频">
+        <!-- <el-input v-model="addFormList.addForm.video" /> -->
+        <el-upload
+          v-model:file-list="fileList"
+          class="upload-demo"
+          action="/api/upload/video"
+          name="video"
+          :on-preview="handlePrevie"
+          :on-remove="handleRemov"
+          :on-success="handleSucces"
+          list-type="picture"
+        >
+          <el-button type="primary">点击上传视频</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -73,15 +111,13 @@
   <!-- 删除章节对话框 -->
   <el-dialog v-model="delDialogVisible" title="删除章节" width="30%" center>
     <div class="warning custom-block">
-      <p class="custom-block-title"> warning</p>
+      <p class="custom-block-title">warning</p>
       <p>确定删除章节 {{ deltitle }} ?</p>
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="delConfirm" type="primary">确定</el-button>
-        <el-button  @click="closeDelDialog">
-          取消
-        </el-button>
+        <el-button @click="closeDelDialog"> 取消 </el-button>
       </span>
     </template>
   </el-dialog>
@@ -91,7 +127,8 @@
 import { ref, onMounted, reactive, toRefs, Ref } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
-import { getChapter, addChapter, eddChapter,delChapter } from "../api/chapter";
+import type { UploadProps, UploadUserFile } from "element-plus";
+import { getChapter, addChapter, eddChapter, delChapter } from "../api/chapter";
 import {
   ChapterData,
   addformData,
@@ -104,23 +141,29 @@ const courseId: any = ref(router.query.courseId);
 const chapterDataList = reactive(new ChapterData());
 const addFormList = reactive(new addformData());
 const eddFormList = reactive(new eddformData());
+const fileList = ref<UploadUserFile[]>([]);
 
 const state = reactive<{
   addDialogVisible: boolean;
   eddDialogVisible: boolean;
   delDialogVisible: boolean;
   deltitle: string;
-  delId:string;
+  delId: string;
 }>({
   addDialogVisible: false,
   eddDialogVisible: false,
   delDialogVisible: false,
   deltitle: "",
-  delId:"",
+  delId: "",
 });
 
-const { addDialogVisible, eddDialogVisible, delDialogVisible, deltitle,delId } =
-  toRefs(state);
+const {
+  addDialogVisible,
+  eddDialogVisible,
+  delDialogVisible,
+  deltitle,
+  delId,
+} = toRefs(state);
 
 const getChapterList = () => {
   getChapter(courseId.value)
@@ -137,7 +180,7 @@ const getChapterList = () => {
 
 const openAddDialog = () => {
   addDialogVisible.value = true;
-  addFormList.addForm.courseId=courseId.value;
+  addFormList.addForm.courseId = courseId.value;
 };
 
 const closeAddDialog = () => {
@@ -174,9 +217,14 @@ const closeEddDialog = () => {
 };
 
 const editRow = (row: eddformInt) => {
+  const url = row.video
+  fileList.value.push({
+    'url':url
+  })
   openEddDialog();
   eddFormList.editForm = row;
-  // console.log(row);
+  addFormList.addForm.video=fileList.value[0].url
+  console.log(row);
 };
 
 const eddConfirm = () => {
@@ -208,29 +256,59 @@ const closeDelDialog = () => {
   delDialogVisible.value = false;
 };
 
-const delRow = (row:eddformInt) => {
+const delRow = (row: eddformInt) => {
   openDelDialog();
   deltitle.value = row.title;
   delId.value = row.id;
 };
 
-const delConfirm = () =>{
-  delChapter(delId.value).then((res:any)=>{
-    if (res.data.code === 200) {
+const delConfirm = () => {
+  delChapter(delId.value)
+    .then((res: any) => {
+      if (res.data.code === 200) {
         ElMessage({
           message: "删除章节成功",
           type: "success",
         });
       }
-      closeDelDialog()
-      getChapterList()
-  }).catch(() => {
+      closeDelDialog();
+      getChapterList();
+    })
+    .catch(() => {
       ElMessage({
         message: "删除章节失败",
         type: "error",
       });
     });
-}
+};
+
+const handleSuccess = (res: any) => {
+  addFormList.addForm.video=res.data.path
+  // console.log(res.data.path);
+  // console.log(res.data.actPath);
+};
+
+const handleRemove: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles);
+};
+
+const handlePreview: UploadProps["onPreview"] = (file) => {
+  console.log(file);
+};
+
+const handleSucces = (res: any) => {
+  addFormList.addForm.video=res.data.path
+  // console.log(res.data.path);
+  // console.log(res.data.actPath);
+};
+
+const handleRemov: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles);
+};
+
+const handlePrevie: UploadProps["onPreview"] = (file) => {
+  console.log(file);
+};
 
 onMounted(() => {
   getChapterList();
@@ -239,14 +317,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .custom-block.warning {
-    padding: 8px 16px;
-    background-color: rgba(var(--el-color-danger-rgb), .1);
-    border-radius: 4px;
-    border-left: 5px solid #f56c6c;
-    margin: 20px 0;
+  padding: 8px 16px;
+  background-color: rgba(var(--el-color-danger-rgb), 0.1);
+  border-radius: 4px;
+  border-left: 5px solid #f56c6c;
+  margin: 20px 0;
 }
 .custom-block .custom-block-title {
-    font-weight: 700;
-    line-height:2.5;
+  font-weight: 700;
+  line-height: 2.5;
 }
 </style>

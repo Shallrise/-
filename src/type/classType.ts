@@ -6,6 +6,7 @@ interface recodsInt {
   kind: number;
   teacher: string;
   title: string;
+  teacherId:number;
 }
 
 interface pageDataInt {
@@ -25,7 +26,7 @@ export class ClassData {
 
 export interface addformInt {
   title: string;
-  teacher: string;
+  teacherId:number;
   hour: string;
   image: string;
   introduce: string;
@@ -34,7 +35,7 @@ export interface addformInt {
 export class addformData {
   addForm: addformInt = {
     title: "",
-    teacher:"",
+    teacherId:0,
     hour:"",
     image:'',
     introduce:''
@@ -45,7 +46,7 @@ export interface eddformInt {
   id: number;
   image: string;
   introduce: string;
-  teacher: string;
+  teacherId: number;
   hour: number;
   title: string;
 }
@@ -55,7 +56,7 @@ export class eddformData {
     id: 0,
     image: '',
     introduce: "",
-    teacher: "",
+    teacherId: 0,
     hour: 0,
     title: ""
   };
