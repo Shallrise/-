@@ -217,7 +217,7 @@ const closeEddDialog = () => {
 };
 
 const editRow = (row: eddformInt) => {
-  const url = row.video
+  const url:string = row.video
   fileList.value.push({
     'url':url
   })
