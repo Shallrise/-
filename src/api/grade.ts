@@ -1,5 +1,5 @@
 import createAxios from "../utils/requst";
-import {addFormInt} from '../type/gradeType'
+import {addFormInt,eddFormInt} from '../type/gradeType'
 const api = {
     operagrade:'/admin/class',
     searchgrade:'/admin/class/select'
@@ -39,7 +39,7 @@ export function addGrade(addForm:addFormInt){
     })
 }
 
-export function eddGrade(eddForm:addFormInt,id:number){
+export function eddGrade(eddForm:eddFormInt,id:number){
     return createAxios({
         url:api.operagrade,
         method:'put',
