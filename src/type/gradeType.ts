@@ -3,7 +3,7 @@ export interface recodsInt {
     className: string,
     code:string,
     number:number,
-    publicity:boolean,
+    publicity:string,
     description:string,
     createTime:string
   }
