@@ -41,4 +41,20 @@ export interface addFormInt{
         lecturerId:0
     };
   }
+
+  export interface eddFormInt{
+    className:string,
+    publicity:string,
+    description:string,
+    image:string
+}
+
+export class eddformData {
+    addForm: eddFormInt = {
+        className:'',
+        publicity:'',
+        description:'',
+        image:'',
+    };
+  }
  
