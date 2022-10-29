@@ -326,7 +326,7 @@ const editRow = (row: recodsInt) => {
   eddFormList.addForm.publicity = row.publicity;
   eddFormList.addForm.description = row.description;
   eddId.value = row.id;
-  editFormList.addForm.image = fileLis.value[0].url;
+  eddFormList.addForm.image = fileLis.value[0].url;
   // console.log(row);
 };
 
