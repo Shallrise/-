@@ -4,8 +4,7 @@
       <el-header>
         <el-row :gutter="20">
           <el-col :span="4"
-            ><img src="../assets/vue.svg" class="logo"
-          /></el-col>
+            ></el-col>
           <el-col :span="4"></el-col>
         </el-row>
       </el-header>
